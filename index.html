@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Wellness Assessment Report</title>
+    <style>
+    
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #02765F 0%, #03242B 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .page {
+            max-width: 100%;
+            margin: 0 auto;
+            background: #F7FBFC;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin-bottom: 30px;
+            min-height: calc(100vh - 40px);
+            display: none;
+            position: relative;
+        }
+        
+        .page-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            right: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+        
+        .footer-left {
+            font-weight: 500;
+            color: #dc2626;
+        }
+        
+        .footer-center {
+            font-weight: 600;
+            color: #0C1E1B;
+        }
+        
+        .footer-right {
+            font-weight: 500;
+            color: #02765F;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .logo-placeholder {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-box {
+            display: inline-block;
+            width: 200px;
+            height: 80px;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-box:hover {
+            border-color: #4f46e5;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .logo-text {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #02765F;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            color: #0C1E1B;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+        
+        .employee-info {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .employee-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .assessment-date {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            height: 400px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            padding: 2px;
+            position: relative;
+        }
+        
+        .pillar {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .pillar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .pillar.top-left { grid-column: 1; grid-row: 1; border-radius: 18px 2px 2px 2px; }
+        .pillar.top-right { grid-column: 2; grid-row: 1; border-radius: 2px 18px 2px 2px; }
+        .pillar.bottom-left { grid-column: 1; grid-row: 2; border-radius: 2px 2px 2px 18px; }
+        .pillar.bottom-right { grid-column: 2; grid-row: 2; border-radius: 2px 2px 18px 2px; }
+        
+        .pillar h3 {
+            color: #1f2937;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .pillar-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .score-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .health-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .vulnerable { 
+            color: #dc2626; 
+            background-color: #fef2f2;
+            border-color: #fecaca;
+        }
+        .vulnerable .score { color: #dc2626; }
+        .vulnerable .health-indicator { background-color: #dc2626; }
+        
+        .coping { 
+            color: #d97706; 
+            background-color: #fffbeb;
+            border-color: #fed7aa;
+        }
+        .coping .score { color: #d97706; }
+        .coping .health-indicator { background-color: #d97706; }
+        
+        .healthy { 
+            color: #02765F; 
+            background-color: #F3FFDE;
+            border-color: #AFFA37;
+        }
+        .healthy .score { color: #02765F; }
+        .healthy .health-indicator { background-color: #02765F; }
+        
+        .overall-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #02765F 0%, #03242B 100%);
+            color: white;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 15px 40px rgba(2, 118, 95, 0.3);
+            width: 140px;
+            height: 140px;
+            z-index: 10;
+        }
+        
+        .overall-score h3 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            line-height: 1.1;
+        }
+        
+        .overall-score .score {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 5px;
+        }
+        
+        .overall-score .score-label {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .health-status {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 2px solid #d1d5db;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .health-status h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .health-status p {
+            color: #4b5563;
+            font-size: 1rem;
+        }
+        
+        .recommendation-box {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .recommendation-box h2 {
+            color: #1f2937;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .recommendation-box h2::before {
+            content: "💡";
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .recommendation-text {
+            color: #374151;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(5, 150, 105, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+        }
+        
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #02765F 0%, #03242B 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(2, 118, 95, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(2, 118, 95, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .pillar-recommendations {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .pillar-rec {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .pillar-rec h3 {
+            color: #1f2937;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pillar-rec p {
+            color: #374151;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .action-items {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .action-items h4 {
+            color: #0c4a6e;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .action-items ul {
+            color: #0c4a6e;
+            padding-left: 20px;
+        }
+        
+        .action-items li {
+            margin-bottom: 5px;
+        }
+        
+        .score-explanation {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+        }
+        
+        .score-explanation h2 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .definition {
+            color: #475569;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .definition-highlight {
+            background: linear-gradient(135deg, #02765F 0%, #03242B 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(2, 118, 95, 0.2);
+        }
+        
+        .framework-description {
+            color: #475569;
+            line-height: 1.7;
+            font-size: 1rem;
+            text-align: justify;
+            margin-bottom: 35px;
+        }
+        
+        .score-timeline {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .timeline-header h3 {
+            color: #1e293b;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .timeline-container {
+            margin-bottom: 30px;
+        }
+        
+        .timeline-bar {
+            display: flex;
+            height: 60px;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .timeline-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-segment:hover {
+            transform: scaleY(1.1);
+            z-index: 2;
+        }
+        
+        .timeline-segment.vulnerable {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        }
+        
+        .timeline-segment.coping {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+        }
+        
+        .timeline-segment.healthy {
+            background: linear-gradient(135deg, #02765F 0%, #03242B 100%);
+        }
+        
+        .segment-label {
+            color: white;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .score-range {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+        
+        .status-label {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .timeline-markers {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            padding: 0 10px;
+        }
+        
+        .marker {
+            position: absolute;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transform: translateX(-50%);
+        }
+        
+        .tier-descriptions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .tier-desc {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .tier-desc:hover {
+            transform: translateX(5px);
+        }
+        
+        .tier-desc.vulnerable {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 4px solid #dc2626;
+        }
+        
+        .tier-desc.coping {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid #d97706;
+        }
+        
+        .tier-desc.healthy {
+            background: linear-gradient(135deg, #F3FFDE 0%, #F7FBFC 100%);
+            border-left: 4px solid #02765F;
+        }
+        
+        .tier-icon {
+            font-size: 1.5rem;
+            margin-top: 2px;
+        }
+        
+        .tier-content h4 {
+            color: #1e293b;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .tier-content p {
+            color: #475569;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .page2-scores {
+            margin-bottom: 40px;
+        }
+        
+        .compact-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr 200px 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            align-items: center;
+        }
+        
+        .compact-pillar {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .compact-pillar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .compact-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .compact-info h4 {
+            color: #1f2937;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .compact-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .compact-overall {
+            background: linear-gradient(135deg, #02765F 0%, #03242B 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(2, 118, 95, 0.3);
+        }
+        
+        .compact-overall h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .compact-overall-score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .score-interpretation {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .score-interpretation p {
+            color: #475569;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .recommendations-section {
+            margin-bottom: 40px;
+        }
+        
+        .recommendations-section h2 {
+            color: #1f2937;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .recommendations-intro {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .recommendations-intro p {
+            color: #475569;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        .recommendations-intro p:last-child {
+            margin-bottom: 0;
+        }
+          .coach-contact {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .coach-contact p {
+            color: #0c4a6e;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .coach-contact a {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .coach-contact a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .results-container {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                height: 300px;
+                max-width: 400px;
+            }
+            
+            .overall-score {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .pillar {
+                padding: 15px;
+            }
+            
+            .score {
+                font-size: 2rem;
+            }
+            
+            .overall-score .score {
+                font-size: 2.5rem;
+            }
+            
+            .pillar-recommendations {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-explanation {
+                padding: 25px;
+            }
+            
+            .score-explanation h2 {
+                font-size: 1.6rem;
+            }
+            
+            .definition-highlight {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            
+            .timeline-bar {
+                height: 50px;
+            }
+            
+            .segment-label {
+                font-size: 0.8rem;
+            }
+            
+            .score-range {
+                font-size: 0.9rem;
+            }
+            
+            .status-label {
+                font-size: 0.7rem;
+            }
+            
+            .compact-results {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 150px 1fr;
+                gap: 15px;
+                height: 300px;
+            }
+            
+            .compact-overall {
+                grid-column: 1 / 3;
+                grid-row: 2;
+                padding: 20px;
+            }
+            
+            .compact-overall-score {
+                font-size: 2.8rem;
+            }
+            
+            .compact-score {
+                font-size: 2rem;
+            }
+            
+            .compact-icon {
+                font-size: 1.5rem;
+            }
+            
+            .score-interpretation {
+                padding: 20px;
+            }
+            
+            .score-interpretation p {
+                font-size: 1rem;
+            }
+        }
+        @media print {
+  html, body {
+    width: 210mm;
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm;
+    margin: 0 auto;
+    background: #F7FBFC;
+    box-sizing: border-box;
+    page-break-after: always;
+    position: relative;
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 20mm;
+    left: 20mm;
+    right: 20mm;
+  }
+
+  .navigation {
+    display: none !important;
+  }
+
+  /* ✅ Only apply page-break avoidance to very small blocks */
+  .pillar-rec,
+  .tier-desc,
+  .recommendations-intro,
+  .score-interpretation,
+  .coach-contact {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Remove from big grid containers */
+  .results-container,
+  .pillar-recommendations,
+  .score-explanation,
+  .score-timeline {
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .logo-box img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Page 1: Overview and Overall Assessment -->
+    <div class="page active" id="page1">
+        <div class="logo-placeholder">
+               <div class="logo-box">
+    <img src="perks-and-co-light 1.png" alt="Company Logo" style="max-height: 60px; max-width: 180px;" />
+</div>
+        </div>
+        
+        <div class="header">
+            <h1>Financial Wellness Assessment</h1>
+            <p>Personalized Financial Health Report</p>
+        </div>
+        
+        <div class="employee-info">
+            <div class="employee-name" id="employeeName">Sarah Johnson</div>
+            <div class="assessment-date" id="assessmentDate">Assessment Date: March 15, 2024</div>
+        </div>
+        
+        <div class="score-explanation">
+            <h2>Financial Health Score</h2>
+            <p class="definition">
+                The Financial Health Score is based upon the following definition of financial health:
+            </p>
+            <div class="definition-highlight">
+                <strong>Financial health occurs when your daily financial systems allow you to be resilient and pursue opportunities over time.</strong>
+            </div>
+            <p class="framework-description">
+                Financial health is a composite framework that considers the totality of an individual's financial situation. Unlike narrow metrics like credit scores, financial health considers whether individuals are spending, saving, borrowing, and planning in a way that will either contribute to, or detract from, their resilience in the face of unexpected events and ability to thrive in the long term.
+            </p>
+            
+            <div class="score-timeline">
+                <div class="timeline-header">
+                    <h3>Financial Health Score Range</h3>
+                </div>
+                <div class="timeline-container">
+                    <div class="timeline-bar">
+                        <div class="timeline-segment vulnerable" style="width: 39%;">
+                            <div class="segment-label">
+                                <span class="score-range">0 - 39</span>
+                                <span class="status-label">Financially Vulnerable</span>
+                            </div>
+                        </div>
+                        <div class="timeline-segment coping" style="width: 30%;">
+                            <div class="segment-label">
+                                <span class="score-range">40 - 69</span>
+                                <span class="status-label">Financially Coping</span>
+                            </div>
+                        </div>
+                        <div class="timeline-segment healthy" style="width: 31%;">
+                            <div class="segment-label">
+                                <span class="score-range">70 - 100</span>
+                                <span class="status-label">Financially Healthy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-markers">
+                        <span class="marker" style="left: 0%;">0</span>
+                        <span class="marker" style="left: 39%;">39</span>
+                        <span class="marker" style="left: 69%;">69</span>
+                        <span class="marker" style="left: 100%;">100</span>
+                    </div>
+                </div>
+                
+                <div class="tier-descriptions">
+                    <div class="tier-desc vulnerable">
+                        <div class="tier-icon">⚠️</div>
+                        <div class="tier-content">
+                            <h4>Financially Vulnerable (0-39)</h4>
+                            <p>Individuals with scores in this range report healthy outcomes across few, or none, of the eight financial health indicators.</p>
+                        </div>
+                    </div>
+                    <div class="tier-desc coping">
+                        <div class="tier-icon">⚖️</div>
+                        <div class="tier-content">
+                            <h4>Financially Coping (40-69)</h4>
+                            <p>Individuals with scores in this range report healthy outcomes across some, but not all, of the eight financial health indicators.</p>
+                        </div>
+                    </div>
+                    <div class="tier-desc healthy">
+                        <div class="tier-icon">✅</div>
+                        <div class="tier-content">
+                            <h4>Financially Healthy (70-100)</h4>
+                            <p>Individuals with scores in this range report healthy outcomes across all eight financial health indicators.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-container">
+            <div class="pillar top-left healthy" id="spendPillar">
+                <div class="health-indicator"></div>
+                <div class="pillar-icon">💳</div>
+                <h3>Spend</h3>
+                <div class="score" id="spendScore">75</div>
+                <div class="score-label">Score</div>
+            </div>
+            
+            <div class="pillar top-right coping" id="savePillar">
+                <div class="health-indicator"></div>
+                <div class="pillar-icon">💰</div>
+                <h3>Save</h3>
+                <div class="score" id="saveScore">58</div>
+                <div class="score-label">Score</div>
+            </div>
+            
+            <div class="overall-score">
+                <h3>Overall Health</h3>
+                <div class="score" id="overallScore">64</div>
+                <div class="score-label">Score</div>
+            </div>
+            
+            <div class="pillar bottom-left vulnerable" id="borrowPillar">
+                <div class="health-indicator"></div>
+                <div class="pillar-icon">🏦</div>
+                <h3>Borrow</h3>
+                <div class="score" id="borrowScore">35</div>
+                <div class="score-label">Score</div>
+            </div>
+            
+            <div class="pillar bottom-right healthy" id="planPillar">
+                <div class="health-indicator"></div>
+                <div class="pillar-icon">📊</div>
+                <h3>Plan</h3>
+                <div class="score" id="planScore">78</div>
+                <div class="score-label">Score</div>
+            </div>
+        </div>
+        
+        <div class="score-interpretation" id="scoreInterpretationPage1">
+            <p>Your overall score is <strong>64</strong> which means that you are coping financially, but there is room for improvement in spending, saving, and planning in a way that will allow you to be resilient and pursue opportunities over time.</p>
+        </div>
+        
+        <div class="page-footer">
+            <div class="footer-left">Confidential</div>
+            <div class="footer-center">Individual Financial Wellness Report</div>
+            <div class="footer-right">perksand.co</div>
+        </div>
+    </div>
+    
+    <!-- Page 2: Spend and Save Pillars -->
+    <div class="page" id="page2">
+        <div class="header">
+            <h1>Personalized Action Plan</h1>
+            <p>Spend & Save Recommendations</p>
+        </div>
+        
+        <div class="recommendations-section">
+            <h2>Recommendations</h2>
+            <div class="recommendations-intro">
+                <p>Your overall financial health score is <strong>76</strong> which means you are financially healthy.</p>
+                <p>To make effective recommendations for improving your overall financial health, it's crucial to examine the scores and recommendations for each of the four key pillars that make up your financial health score.</p>
+            </div>
+        </div>
+        
+        <div class="pillar-recommendations">
+            <div class="pillar-rec">
+                <h3><span style="margin-right: 10px;">💳</span>Spend Pillar - Score: 75 (Healthy)</h3>
+                <p id="spendRec">
+                    Excellent work! Your spending habits demonstrate strong financial discipline. You're successfully managing your expenses within your means and making conscious spending decisions.
+                    <br><br>
+                    <strong>What's Working:</strong> You likely have a good handle on your monthly expenses, avoid overspending, and make thoughtful purchasing decisions.
+                </p>
+                <div class="action-items">
+                    <h4>Action Items to Maintain Excellence:</h4>
+                    <ul>
+                        <li>Continue tracking expenses monthly</li>
+                        <li>Review and optimize recurring subscriptions quarterly</li>
+                        <li>Set spending alerts for discretionary categories</li>
+                        <li>Consider the 24-hour rule for non-essential purchases over $100</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pillar-rec">
+                <h3><span style="margin-right: 10px;">💰</span>Save Pillar - Score: 58 (Coping)</h3>
+                <p id="saveRec">
+                    Your savings habits need strengthening to build financial resilience. While you may have some savings, it's likely not sufficient for emergencies or long-term goals.
+                    <br><br>
+                    <strong>Areas for Improvement:</strong> Emergency fund may be inadequate, retirement savings could be behind target, or you may struggle to save consistently.
+                </p>
+                <div class="action-items">
+                    <h4>Priority Actions:</h4>
+                    <ul>
+                        <li>Build emergency fund to cover 3-6 months of expenses</li>
+                        <li>Automate savings - start with $50-100 per paycheck</li>
+                        <li>Maximize employer 401(k) match if available</li>
+                        <li>Open a high-yield savings account</li>
+                        <li>Use the "pay yourself first" principle</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <div class="footer-left">Confidential</div>
+            <div class="footer-center">Individual Financial Wellness Report</div>
+            <div class="footer-right">perksand.co</div>
+        </div>
+    </div>
+    
+    <!-- Page 3: Borrow and Plan Pillars -->
+    <div class="page" id="page3">
+        <div class="header">
+            <h1>Personalized Action Plan</h1>
+            <p>Borrow & Plan Recommendations</p>
+        </div>
+        
+        <div class="pillar-recommendations">
+            <div class="pillar-rec">
+                <h3><span style="margin-right: 10px;">🏦</span>Borrow Pillar - Score: 35 (Vulnerable)</h3>
+                <p id="borrowRec">
+                    <strong>Critical Area:</strong> Your borrowing situation requires immediate attention. High debt levels or poor credit management may be significantly impacting your financial stability.
+                    <br><br>
+                    <strong>Likely Issues:</strong> High debt-to-income ratio, missed payments, high credit utilization, or unmanageable monthly debt payments.
+                </p>
+                <div class="action-items">
+                    <h4>Urgent Actions Required:</h4>
+                    <ul>
+                        <li>List all debts with balances, rates, and minimum payments</li>
+                        <li>Consider debt consolidation or balance transfer options</li>
+                        <li>Contact creditors to discuss payment plans if struggling</li>
+                        <li>Stop using credit cards for new purchases</li>
+                        <li>Seek credit counseling services (many are free)</li>
+                        <li>Focus on paying minimums plus extra on highest-rate debt</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pillar-rec">
+                <h3><span style="margin-right: 10px;">📊</span>Plan Pillar - Score: 78 (Healthy)</h3>
+                <p id="planRec">
+                    Outstanding planning skills! You demonstrate strong financial foresight and goal-setting abilities. This is a significant strength that will help you address other areas.
+                    <br><br>
+                    <strong>Your Strengths:</strong> You likely have clear financial goals, understand basic financial concepts, and think ahead about major financial decisions.
+                </p>
+                <div class="action-items">
+                    <h4>Leverage Your Planning Strength:</h4>
+                    <ul>
+                        <li>Create a detailed debt payoff plan using your planning skills</li>
+                        <li>Set SMART financial goals for the next 1, 5, and 10 years</li>
+                        <li>Review and update your financial plan quarterly</li>
+                        <li>Consider learning about investment strategies</li>
+                        <li>Use your planning skills to help family/friends with their finances</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="coach-contact">
+            <p>If you would like to schedule an appointment with a financial coach please email: <a href="mailto:raeesa@levelfinance.co.za">raeesa@levelfinance.co.za</a></p>
+        </div>
+        <div class="page-footer">
+            <div class="footer-left">Confidential</div>
+            <div class="footer-center">Individual Financial Wellness Report</div>
+            <div class="footer-right">perksand.co</div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="download-btn" onclick="downloadPDF()">
+            <span>📄</span>
+            Download PDF
+        </button>
+        <button class="nav-btn" id="prevBtn" onclick="previousPage()" disabled>← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextPage()">Next →</button>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        let currentPage = 1;
+        const totalPages = 3;
+        
+        function showPage(pageNum) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(`page${pageNum}`).classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = pageNum === 1;
+            document.getElementById('nextBtn').disabled = pageNum === totalPages;
+            
+            if (pageNum === totalPages) {
+                document.getElementById('nextBtn').textContent = 'End';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next →';
+            }
+        }
+        
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        }
+        
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+        
+        function getHealthCategory(score) {
+            if (score >= 70) return 'healthy';
+            if (score >= 40) return 'coping';
+            return 'vulnerable';
+        }
+        
+        function getHealthLabel(score) {
+            if (score >= 70) return 'Financially Healthy';
+            if (score >= 40) return 'Financially Coping';
+            return 'Financially Vulnerable';
+        }
+        
+        function updatePillarAppearance(pillarId, score) {
+            const pillar = document.getElementById(pillarId);
+            const category = getHealthCategory(score);
+            
+            // Remove existing health classes
+            pillar.classList.remove('healthy', 'coping', 'vulnerable');
+            // Add new health class
+            pillar.classList.add(category);
+        }
+        
+        function updatePage2Scores() {
+            // Update page 2 recommendations intro with current overall score
+            const overall = parseFloat(document.getElementById('overallScore').textContent) || 0;
+            const recommendationsIntro = document.querySelector('.recommendations-intro p:first-child');
+            
+            let healthStatus = '';
+            if (overall >= 70) {
+                healthStatus = 'financially healthy';
+            } else if (overall >= 40) {
+                healthStatus = 'financially coping';
+            } else {
+                healthStatus = 'financially vulnerable';
+            }
+            
+            recommendationsIntro.innerHTML = `Your overall financial health score is <strong>${overall}</strong> which means you are ${healthStatus}.`;
+        }
+        
+        function updateScoreInterpretation(score) {
+            const interpretation = document.getElementById('scoreInterpretationPage1');
+            let text = '';
+            
+            if (score >= 70) {
+                text = `<p>Your overall score is <strong>${score}</strong> which means that you are spending, saving, borrowing, and planning in a way that will allow you to be resilient and pursue opportunities over time.</p>`;
+            } else if (score >= 40) {
+                text = `<p>Your overall score is <strong>${score}</strong> which means that you are coping financially, but there is room for improvement in spending, saving, and planning in a way that will allow you to be resilient and pursue opportunities over time.</p>`;
+            } else {
+                text = `<p>Your overall score is <strong>${score}</strong> which means that you are not spending, saving, borrowing, and planning in a way that will allow you to be resilient and pursue opportunities over time.</p>`;
+            }
+            
+            interpretation.innerHTML = text;
+        }
+        
+        function updateSpendRecommendations(score) {
+            const spendRec = document.getElementById('spendRec');
+            if (!spendRec) return;
+            
+            const spendTitle = spendRec.parentElement.querySelector('h3');
+            const actionItems = spendRec.parentElement.querySelector('.action-items');
+            
+            if (score >= 70) {
+                spendTitle.innerHTML = '<span style="margin-right: 10px;">💳</span>Spend Pillar - Score: ' + score + ' (Healthy)';
+                spendRec.innerHTML = `
+                    Based on your spend score, your existing spending behaviours are under control and healthy. This means you are making smart and informed decisions about how you manage your money. You budget effectively, set spending limits, and prioritise your expenses to cover all your needs without overspending.
+                    <br><br>
+                    Having control of your spending positively impacts how much you can save and invest each month while still enjoying your money. It is recommended to review your budget annually to maintain a good balance between spending, saving, and planning, adjusting for any changes in your lifestyle or financial goals.
+                    <br><br>
+                    Leveraging your disciplined spending habits along with strong saving and planning practices positions you well to achieve a balanced, secure, and prosperous financial future.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Action Items to Maintain Excellence:</h4>
+                    <ul>
+                        <li>Review your budget annually for lifestyle changes</li>
+                        <li>Regularly revisit your financial plan with a coach</li>
+                        <li>Ensure spending remains aligned with evolving priorities</li>
+                        <li>Prepare for unexpected changes in financial circumstances</li>
+                        <li>Continue balancing spending with saving and investing goals</li>
+                    </ul>
+                `;
+            } else if (score >= 40) {
+                spendTitle.innerHTML = '<span style="margin-right: 10px;">💳</span>Spend Pillar - Score: ' + score + ' (Coping)';
+                spendRec.innerHTML = `
+                    You are currently in the coping stage with your spending behaviour, which means you have started managing your finances but still need to strengthen your habits to achieve financial stability. While your spending is improving, it is important to continue building strong budgeting and tracking practices.
+                    <br><br>
+                    When working with a financial coach, it is advised that you create a budget that defines the key behavioural changes needed from you and/or within your household and commit to improving your expenditure.
+                    <br><br>
+                    Tracking and categorisation of income and expenses are crucial parts of this process. Be sure to clearly distinguish between needs, wants, and nice-to-haves. A budget template can be shared with you that can assist you in drafting a comprehensive budget and provide step-by-step guidance to help you start taking control of your spending habits.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Priority Actions:</h4>
+                    <ul>
+                        <li>Review past financial stress periods and categorize all expenses</li>
+                        <li>Sign up for Old Mutual's Vault22 to automate expense tracking</li>
+                        <li>Cancel unnecessary subscriptions and reduce eating out</li>
+                        <li>Shop around for more affordable deals on regular expenses</li>
+                        <li>Create clear distinctions between needs, wants, and nice-to-haves</li>
+                    </ul>
+                `;
+            } else {
+                spendTitle.innerHTML = '<span style="margin-right: 10px;">💳</span>Spend Pillar - Score: ' + score + ' (Vulnerable)';
+                spendRec.innerHTML = `
+                    <strong>Critical Area:</strong> You are currently vulnerable in your spending behaviour, meaning your financial management is not yet stable, and there is significant room for improvement. Your spending may be inconsistent or unpredictable, leaving you vulnerable to unexpected financial challenges such as unforeseen expenses.
+                    <br><br>
+                    The first step is to work with a financial coach to create a clear, structured budget that addresses the key behavioural changes required from you and/or your household. This budget should focus on reducing unnecessary expenditures and bringing your spending under control.
+                    <br><br>
+                    Tracking and categorising income and expenses are essential parts of this process. You need to clearly differentiate between needs, wants, and nice-to-haves.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Urgent Actions Required:</h4>
+                    <ul>
+                        <li>Work with a financial coach to create a structured budget</li>
+                        <li>Review bank statements from stressful financial periods</li>
+                        <li>Assign every expense to budget categories (groceries, utilities, etc.)</li>
+                        <li>Sign up for Old Mutual's Vault22 for automated tracking</li>
+                        <li>Immediately reduce spending: cancel subscriptions, eat out less</li>
+                        <li>Include ALL expenses in your budget, no matter how small</li>
+                    </ul>
+                `;
+            }
+        }
+        
+        function updateSaveRecommendations(score) {
+            const saveRec = document.getElementById('saveRec');
+            if (!saveRec) return;
+            
+            const saveTitle = saveRec.parentElement.querySelector('h3');
+            const actionItems = saveRec.parentElement.querySelector('.action-items');
+            
+            if (score >= 70) {
+                saveTitle.innerHTML = '<span style="margin-right: 10px;">💰</span>Save Pillar - Score: ' + score + ' (Healthy)';
+                saveRec.innerHTML = `
+                    Based on your score, your saving habits are excellent and demonstrate a high level of financial resilience and discipline. This indicates that you are consistently setting aside funds in a way that supports both your short-term needs and long-term financial goals.
+                    <br><br>
+                    You may wish to explore how your strong savings position can further support other areas such as planning and reducing future reliance on borrowing. Options such as higher-yield savings accounts, accessible investment products, or targeted emergency funds can help grow your wealth while maintaining liquidity.
+                    <br><br>
+                    With your strong foundation, you are well-positioned to make strategic decisions that maximise your overall financial wellness. Consider engaging with a financial coach to fine-tune your approach and ensure your savings continue to align with your evolving goals.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Action Items to Maintain Excellence:</h4>
+                    <ul>
+                        <li>Explore higher-yield savings accounts and accessible investment products</li>
+                        <li>Consider how savings can support planning and reduce borrowing needs</li>
+                        <li>Engage with a financial coach to fine-tune your approach</li>
+                        <li>Ensure savings continue to align with evolving goals</li>
+                        <li>Maximize strategic decisions for overall financial wellness</li>
+                    </ul>
+                `;
+            } else if (score >= 40) {
+                saveTitle.innerHTML = '<span style="margin-right: 10px;">💰</span>Save Pillar - Score: ' + score + ' (Coping)';
+                saveRec.innerHTML = `
+                    You are in a coping savings state, which means you have a financial cushion that can cover most unexpected expenses. This reduces stress and gives you some protection against sudden changes in your financial situation.
+                    <br><br>
+                    However, maintaining and strengthening this position requires regular review. When working with a financial coach to build your financial plan, you may identify shortfalls or gaps in your savings strategy that should be addressed through annual reviews.
+                    <br><br>
+                    These reviews are essential to ensure your savings continue to cover emergencies, short-term needs, income protection, and longer-term goals such as education or retirement.
+                    <br><br>
+                    You may want to consider allocating part of your savings toward longer-term vehicles that accumulate interest over time but remain accessible in case of emergencies. Another approach is to split your savings between accessible emergency funds and investment options that can help preserve and grow your money without eroding it when unexpected costs arise.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Priority Actions:</h4>
+                    <ul>
+                        <li>Schedule annual savings strategy reviews with a financial coach</li>
+                        <li>Identify gaps in your current savings coverage</li>
+                        <li>Consider longer-term savings vehicles that accumulate interest</li>
+                        <li>Split savings between emergency funds and investment options</li>
+                        <li>Ensure coverage for emergencies, short-term needs, and retirement</li>
+                    </ul>
+                `;
+            } else {
+                saveTitle.innerHTML = '<span style="margin-right: 10px;">💰</span>Save Pillar - Score: ' + score + ' (Vulnerable)';
+                saveRec.innerHTML = `
+                    You are currently vulnerable when it comes to saving, especially in building and maintaining emergency savings. Without a financial buffer, unexpected expenses could easily disrupt your financial stability.
+                    <br><br>
+                    To effectively build savings, it is important to have consistent spending habits and manageable debt. These two areas provide the foundation needed to redirect a portion of your income into regular saving without placing additional strain on your finances.
+                    <br><br>
+                    The first step is to work with a financial coach to assess how much of your income can be redirected toward saving. Even small, regular contributions make a difference over time and reviewing your budget to identify where you can shift non-essential spending into a regular savings habit.
+                    <br><br>
+                    A solid savings plan starts with setting clear, achievable goals. Define what you are saving for, whether it is an emergency fund, a short-term goal like travel, or a long-term need like retirement. Having a plan in place gives your savings direction and helps you stay consistent over time.
+                    <br><br>
+                    As your emergency savings grow, you will build the resilience needed to navigate life's uncertainties with confidence. With focused action and a clear savings roadmap, you can move from vulnerability to financial security.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Urgent Actions Required:</h4>
+                    <ul>
+                        <li>Work with a financial coach to assess redirectable income</li>
+                        <li>Review budget to identify non-essential spending to shift</li>
+                        <li>Set clear, achievable savings goals (emergency, travel, retirement)</li>
+                        <li>Start with small, regular contributions that make a difference over time</li>
+                        <li>Create a clear savings roadmap with your financial coach</li>
+                        <li>Focus on building emergency savings as your first priority</li>
+                    </ul>
+                `;
+            }
+        }
+        
+        function updateBorrowRecommendations(score) {
+            const borrowRec = document.getElementById('borrowRec');
+            if (!borrowRec) return;
+            
+            const borrowTitle = borrowRec.parentElement.querySelector('h3');
+            const actionItems = borrowRec.parentElement.querySelector('.action-items');
+            
+            if (score >= 70) {
+                borrowTitle.innerHTML = '<span style="margin-right: 10px;">🏦</span>Borrow Pillar - Score: ' + score + ' (Healthy)';
+                borrowRec.innerHTML = `
+                    Your level of borrowing is healthy and under control. You are effectively managing your existing debt and meeting your repayment obligations, which is a strong foundation for long-term financial stability.
+At this stage, the focus shifts to how you can use borrowing strategically to support your future goals. This includes considering how credit might be used to invest in opportunities or supplement your income later in life such as during retirement without compromising your financial health.
+A key part of maintaining a healthy borrowing profile is regularly assessing what you can realistically afford to borrow. This means only taking on debt that aligns with your income, with repayment terms that are sustainable and do not place unnecessary pressure on your finances.
+To continue strengthening your borrowing position, consider setting clear limits for any new credit, and revisit your borrowing strategy annually. Responsible credit use not only protects your financial position but also allows you to take advantage of future opportunities with confidence.
+                    <br><br>
+                    <strong>Your Strengths:</strong> You likely have low debt-to-income ratio, excellent payment history, strategic use of credit, and good credit utilization rates.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Action Items to Maintain Excellence:</h4>
+                    <ul>
+                        <li>Continue making all payments on time</li>
+                        <li>Keep credit utilization below 30% (ideally under 10%)</li>
+                        <li>Monitor credit reports quarterly for accuracy</li>
+                        <li>Consider using credit strategically for rewards</li>
+                        <li>Maintain diverse credit mix if beneficial</li>
+                    </ul>
+                `;
+            } else if (score >= 40) {
+                borrowTitle.innerHTML = '<span style="margin-right: 10px;">🏦</span>Borrow Pillar - Score: ' + score + ' (Coping)';
+                borrowRec.innerHTML = `
+                    To move from coping to healthy borrowing, the first priority is to address and eliminate bad debt, particularly short-term, high-interest loans that place strain on your income and erode your financial wellness.
+                    <br><br>
+                    Begin by identifying which debts are costing you the most in interest and fees and pay more than the minimum required on these accounts to help reduce the total interest you will pay over time and accelerate your path to becoming debt-free.
+                    <br><br>
+                    Once the most expensive debt has been reduced or eliminated, you can shift your focus to low-interest debt that can be managed over a longer period without placing undue pressure on your budget.
+                    <br><br>
+                    Take time to research the true cost of credit by reviewing all associated fees so you are fully aware of what you are paying and why. This clarity helps you make better borrowing decisions going forward.
+                    <br><br>
+                    A financial coach can help you prioritise which debts to tackle first and guide you in structuring a plan that aligns with your income and personal goals. Together, you can also explore ways to improve your credit score, which will reduce the cost of borrowing in future and open access to more affordable credit options.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Priority Actions:</h4>
+                    <ul>
+                        <li>Identify and eliminate bad debt, especially high-interest loans</li>
+                        <li>Pay more than minimum on debts with highest interest and fees</li>
+                        <li>Research true cost of credit including all associated fees</li>
+                        <li>Work with financial coach to prioritise debt repayment plan</li>
+                        <li>Focus on improving credit score for better future rates</li>
+                        <li>Analyse best sources of borrowing to avoid high-interest options</li>
+                        <li>Assess impact of interest rate changes on your debt portfolio</li>
+                    </ul>
+                `;
+            } else {
+                borrowTitle.innerHTML = '<span style="margin-right: 10px;">🏦</span>Borrow Pillar - Score: ' + score + ' (Vulnerable)';
+                borrowRec.innerHTML = `
+                    You are currently vulnerable in your borrowing behaviour, which means your current credit usage may be unsustainable or exposing you to financial risk. This could result in mounting debt, increased stress, and limited flexibility when financial emergencies arise.
+                    <br><br>
+                    When reviewing borrowing, there are a couple of considerations to factor in. The first would be to analyse your existing income and expenses to determine where you can reduce existing spending. This can be achieved through a budgeting process to assess where you can realistically borrow from, while still remaining financially secure.
+                    <br><br>
+                    The second would be to analyse where you are paying high interest on current credit products. In order to reduce the indebted amounts on your borrowing, you should work with a financial coach to analyse which debts can be paid off quicker, within realistic time frames, and determine how to increase your credit score over time.
+                    <br><br>
+                    It is also important that you research your lender(s) and analyse all associated costs such as initiation, maintenance and life cover fees, and interest charges. This will provide a clear indication of what your associated payments will be over the period.
+                    <br><br>
+                    Paying more than the minimum repayment amount will reduce the total interest in the long run, so when working with the financial coach, it's important to examine how much you can allocate toward paying off your existing debts.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Urgent Actions Required:</h4>
+                    <ul>
+                        <li>Analyse existing income and expenses to reduce spending</li>
+                        <li>Work with a financial coach to identify which debts to pay off first</li>
+                        <li>Research all lender costs: initiation, maintenance, life cover fees</li>
+                        <li>Pay more than minimum amounts to reduce total interest</li>
+                        <li>Focus on eliminating high-interest credit first</li>
+                        <li>Close accounts you no longer need</li>
+                        <li>Avoid taking on new credit until debt is under control</li>
+                    </ul>
+                `;
+            }
+        }
+        
+        function updatePlanRecommendations(score) {
+            const planRec = document.getElementById('planRec');
+            if (!planRec) return;
+            
+            const planTitle = planRec.parentElement.querySelector('h3');
+            const actionItems = planRec.parentElement.querySelector('.action-items');
+            
+            if (score >= 70) {
+                planTitle.innerHTML = '<span style="margin-right: 10px;">📊</span>Plan Pillar - Score: ' + score + ' (Healthy)';
+                planRec.innerHTML = `
+                    Based on your score, you appear to have a secure financial future. This suggests that you have taken active steps to plan ahead and have implemented the necessary risk mitigation measures to protect both your short-term needs and long-term goals.
+To maintain this healthy planning position, it is important to regularly review your goals and adjust them as your circumstances change. Setting realistic and achievable financial targets ensures that your spending and borrowing remain aligned with your broader financial plan and do not erode the progress you have made.
+By continuing to stay intentional with your planning and making informed financial decisions, you are well-positioned to achieve long-term financial stability and resilience.
+
+                    <br><br>
+                    <strong>Your Strengths:</strong> You likely have written financial goals, understand basic investment principles, regularly review your finances, and plan for major life events.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Action Items to Maintain Excellence:</h4>
+                    <ul>
+                        <li>Review and update financial goals quarterly</li>
+                        <li>Continue learning about advanced investment strategies</li>
+                        <li>Consider working with a financial advisor for complex planning</li>
+                        <li>Plan for major life events (home purchase, children, retirement)</li>
+                        <li>Use your planning skills to help others improve their finances</li>
+                    </ul>
+                `;
+            } else if (score >= 40) {
+                planTitle.innerHTML = '<span style="margin-right: 10px;">📊</span>Plan Pillar - Score: ' + score + ' (Coping)';
+                planRec.innerHTML = `
+                    You are currently in the coping stage with your financial planning, which means you have started setting short- and long-term goals but your plan may still require refinement and structure to be fully effective. The planning quadrant assesses your ability to meet financial goals while considering risk mitigation for events beyond your control.
+Short-term goals often include building an emergency fund and saving for upcoming expenses such as a car, or a home. Longer-term goals may involve retirement planning, funding your children’s education, or other investments. The first step is to clearly define your financial goals based on your current situation and begin making behavioural changes that support achieving them.
+Achievable targets should be set with an understanding that unexpected changes may impact your plan. It is important to also consider insurance, and other expenses when creating your roadmap.
+Working with a financial coach, you should incorporate these planning activities into your budget and create measurable milestones to review progress regularly. Tracking your investments and savings periodically will help you identify any adjustments needed to stay on course.
+To move from coping to healthy, focus on formalising your goals with timelines, expanding your emergency fund to cover at least three months of expenses, and exploring investment options aligned with your risk tolerance and objectives.
+                    <br><br>
+                    <strong>Areas for Improvement:</strong> Goals may be vague or unwritten, limited investment knowledge, infrequent financial reviews, or difficulty following through on financial plans.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Priority Actions:</h4>
+                    <ul>
+                        <li>Write down specific, measurable financial goals</li>
+                        <li>Create a basic investment plan for retirement</li>
+                        <li>Schedule monthly financial check-ins with yourself</li>
+                        <li>Learn basic investment concepts through reputable sources</li>
+                        <li>Set up automatic contributions to retirement accounts</li>
+                        <li>Plan for one major financial goal this year</li>
+                    </ul>
+                `;
+            } else {
+                planTitle.innerHTML = '<span style="margin-right: 10px;">📊</span>Plan Pillar - Score: ' + score + ' (Vulnerable)';
+                planRec.innerHTML = `
+                    <strong>Critical Area:</strong> You lack a foundational financial plan, and there is uncertainty about whether the right cover and strategies are in place to reduce financial risk. This leaves you highly vulnerable to unexpected events such as job loss, or medical emergencies
+Your first step should be to work with a financial coach to address the most urgent priorities in your financial life. Together, you will assess whether your income, savings, and existing insurance products (if any) are sufficient to protect your well-being. This initial assessment is critical, as it helps you gain clarity on your current risks and set the groundwork for building a sustainable financial roadmap.
+As a starting point, begin building a basic safety net by setting aside a small emergency fund, even if it is the equivalent of one month’s essential expenses. At the same time, review your spending habits and use a budgeting tool or template to track and prioritise your expenses, ensuring that needs are covered before wants or nice-to-haves.
+The next step is to move from vulnerable to coping state. This involves expanding your emergency fund to cover two to three months of expenses, setting realistic short-term goals such as reducing reliance on debt, and starting to contribute towards longer-term goals like retirement. It is important to begin allocating a portion to yout savings and toward structured investment or planning solutions. We also recommend connecting with a financial advisor who can guide you through the planning process and help you make informed decisions that align with your long-term goals.
+                    <strong>Likely Issues:</strong> No written financial goals, minimal retirement planning, limited investment knowledge, or reactive rather than proactive financial decision-making.
+                `;
+                actionItems.innerHTML = `
+                    <h4>Urgent Actions Required:</h4>
+                    <ul>
+                        <li>Write down three specific financial goals for this year</li>
+                        <li>Learn basic financial concepts through free online resources</li>
+                        <li>Schedule monthly 30-minute financial planning sessions</li>
+                        <li>Consider working with a financial coach or counselor</li>
+                        <li>Start tracking net worth monthly</li>
+                    </ul>
+                `;
+            }
+        }
+        
+        function updateOverallHealth() {
+            const spend = parseFloat(document.getElementById('spendScore').textContent) || 0;
+            const save = parseFloat(document.getElementById('saveScore').textContent) || 0;
+            const borrow = parseFloat(document.getElementById('borrowScore').textContent) || 0;
+            const plan = parseFloat(document.getElementById('planScore').textContent) || 0;
+            
+            const overall = Math.round((spend + save + borrow + plan) / 4);
+            document.getElementById('overallScore').textContent = overall;
+            
+            // Update health status
+            const healthStatus = document.getElementById('healthStatus');
+            if (healthStatus) {
+                const healthLabel = getHealthLabel(overall);
+                const healthCategory = getHealthCategory(overall);
+                
+                healthStatus.innerHTML = `
+                    <h2 class="${healthCategory}">${healthLabel}</h2>
+                    <p>${getHealthDescription(overall)}</p>
+                `;
+            }
+            
+            // Update pillar appearances
+            updatePillarAppearance('spendPillar', spend);
+            updatePillarAppearance('savePillar', save);
+            updatePillarAppearance('borrowPillar', borrow);
+            updatePillarAppearance('planPillar', plan);
+            
+            // Update all recommendations
+            updateSpendRecommendations(spend);
+            updateSaveRecommendations(save);
+            updateBorrowRecommendations(borrow);
+            updatePlanRecommendations(plan);
+            
+            // Update page 1 interpretation
+            updateScoreInterpretation(overall);
+            
+            // Update page 2 scores
+            updatePage2Scores();
+        }
+        
+        function getHealthDescription(score) {
+            if (score >= 70) {
+                return "Excellent! You have a strong financial foundation and are well-positioned for financial success.";
+            } else if (score >= 40) {
+                return "You're managing your finances adequately but have opportunities to strengthen your financial foundation and build greater security.";
+            } else {
+                return "Your financial situation needs immediate attention. Focus on addressing critical areas to improve your financial stability.";
+            }
+        }
+        
+        function makeEditable() {
+            const editableElements = [
+                'employeeName', 'assessmentDate', 'spendScore', 'saveScore', 'borrowScore', 'planScore',
+                'overallRecommendation', 'spendRec', 'saveRec', 'borrowRec', 'planRec'
+            ];
+            
+            editableElements.forEach(id => {
+                const element = document.getElementById(id);
+                element.contentEditable = true;
+                element.style.cursor = 'text';
+                element.addEventListener('focus', function() {
+                    this.style.backgroundColor = '#fef3c7';
+                });
+                element.addEventListener('blur', function() {
+                    this.style.backgroundColor = '';
+                    if (id.includes('Score')) {
+                        updateOverallHealth();
+                    }
+                });
+            });
+        }
+        
+        // Initialize
+        makeEditable();
+        updateOverallHealth();
+        updatePage2Scores();
+        
+        // PDF Download functionality
+        function downloadPDF() {
+            const downloadBtn = document.querySelector('.download-btn');
+            downloadBtn.disabled = true;
+            downloadBtn.innerHTML = '<span>⏳</span> Generating PDF...';
+            
+            // Hide navigation during PDF generation
+            const navigation = document.querySelector('.navigation');
+            navigation.style.display = 'none';
+            
+            // Show all pages for PDF generation
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.add('active');
+                page.style.pageBreakAfter = 'always';
+                page.style.minHeight = 'auto';
+            });
+            
+            // Get employee name for filename
+            const employeeName = document.getElementById('employeeName').textContent.trim();
+            const filename = `Financial_Wellness_Report_${employeeName.replace(/\s+/g, '_')}.pdf`;
+            
+            const opt = {
+                margin: [0.5, 0.5, 0.5, 0.5],
+                filename: filename,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true
+                },
+                jsPDF: { 
+                    unit: 'in', 
+                    format: 'a4', 
+                    orientation: 'portrait' 
+                }
+            };
+            
+            html2pdf().set(opt).from(document.body).save().then(() => {
+                // Restore original state
+                pages.forEach((page, index) => {
+                    page.classList.remove('active');
+                    page.style.pageBreakAfter = '';
+                    page.style.minHeight = 'calc(100vh - 40px)';
+                });
+                
+                // Show current page
+                document.getElementById(`page${currentPage}`).classList.add('active');
+                
+                // Restore navigation
+                navigation.style.display = 'flex';
+                downloadBtn.disabled = false;
+                downloadBtn.innerHTML = '<span>📄</span> Download PDF';
+            });
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextPage();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousPage();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96af914636528a34',t:'MTc1NDQ5NDE0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
